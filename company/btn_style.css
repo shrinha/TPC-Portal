@@ -1,0 +1,38 @@
+body{
+    background: #269ee3;
+}
+
+.btn_form{
+    margin-top: 60%;
+    /* background: #e7a9a9; */
+    padding: 20px;
+    /* box-shadow: 0px 1px 36px 5px rgba(172, 51, 51, 0.28); */
+    border-radius: 10px;
+    
+}
+
+.button-container {
+    display: flex; /* Use flexbox to align buttons in a row */
+  }
+  
+  .btn {
+    width: 100px; /* Set the width of the button */
+    height: 100px; /* Set the height of the button */
+    background-color: #ff0000; /* Set the background color of the button */
+    color: #ffffff; /* Set the text color of the button */
+    font-weight: bold;
+    border: none; /* Remove the default button border */
+    border-radius: 0; /* Remove border radius to make it square */
+    text-align: center; /* Center the text within the button */
+    line-height: 100px; /* Vertically center the text within the button */
+    font-size: 16px; /* Set the font size of the text within the button */
+    text-decoration: none; /* Remove any text decoration */
+    cursor: pointer; /* Add a pointer cursor on hover */
+    margin-right: 10px; /* Add spacing between buttons */
+  }
+  
+  
+  
+  
+  
+  

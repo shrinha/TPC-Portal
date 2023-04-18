@@ -19,7 +19,7 @@ if ( !isset($_POST['roll'], $_POST['password']) ) {
 }
 
 // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE roll = ?')) {
+if ($stmt = $con->prepare('SELECT id, password FROM dba WHERE roll = ?')) {
 	// Bind parameters (s = string, i = int, b = blob, etc), in our case the roll is a string so we use "s"
 	$stmt->bind_param('s', $_POST['roll']);
 	$stmt->execute();
@@ -37,14 +37,14 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE roll = ?')) {
            
             $_SESSION['name'] = $_POST['roll'];
             $_SESSION['id'] = $id;
-            header('Location: home.php');
+            header('Location: http://localhost/phpmyadmin/.php');
         } else {
             // Incorrect password
-            echo 'Incorrect roll and/or password!';
+            echo 'Incorrect id and/or password!';
         }
     } else {
         // Incorrect roll
-        echo 'Incorrect roll and/or password!';
+        echo 'Incorrect  and/or password!';
     }
 
 
