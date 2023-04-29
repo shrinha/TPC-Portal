@@ -18,19 +18,20 @@ if (mysqli_connect_errno()) {
 
 $roll=$_SESSION['name'];
 
-$query2 = "Select * From stud_acad  where Roll_Number='$roll'";
+$query2 = "Select cpi From stud_acad  where Roll_Number='$roll'";
 $result2= mysqli_query($conn,$query2);
 $row2=mysqli_fetch_assoc($result2);
 $cpi=$row2["cpi"];
 
-$query3 = "Select * From stud_personal where Roll='$roll'";
+
+
+$query3 = "Select ctc From stud_personal where Roll='$roll'";
 $result3= mysqli_query($conn,$query3);
 $row3=mysqli_fetch_assoc($result3);
 $ctc=$row3["ctc"];
 
 
-
-$query = "Select * From company where ( ctc > '$ctc' and cpi < $cpi ) order by ctc";
+$query = "select c.cid,c.name,j.j_title,j.j_location,c.year, j.cpi,j.ctc,j.j_category from company c natural join job j where ( j.ctc > '$ctc' and j.cpi < $cpi ) order by ctc desc; ";
 $result= mysqli_query($conn,$query);
 $row=mysqli_fetch_assoc($result);
 
@@ -45,9 +46,9 @@ $row=mysqli_fetch_assoc($result);
 		<meta charset="utf-8">
 		<title>Profile Page</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	</head>
-	<body class="loggedin">
+	<body class="loggedin" >
 		<nav class="navtop">
 			<div>
 				<h1>Training & Placement Cell</h1>
@@ -58,20 +59,49 @@ $row=mysqli_fetch_assoc($result);
 			</div>
 		</nav>
 		<div class="content">
-			<h2>You are Eiligible For the Following Companies</h2>
+			<h2>Companies You are Eligible For :</h2>
 			<div>
 			
-				<table> 
+				<table class="table"> 
+
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Role</th>
+							<th>Location</th>
+							<th>Year</th>
+							<th>CPI Cutoff</th>
+							<th>CTC</th>
+							<th>Domain</th>
+						</tr>
+					</thead>	
+					
+					
+					<tr>
+                            <td><?=$row['name']?></td>
+                            <td><?=$row['j_title']?>  </td>
+							<td><?=$row['j_location']?>  </td>
+                            <td><?=$row['year']?>  </td>
+							<td><?=$row['cpi']?>  </td>
+							<td><?=$row['ctc']?>  </td>
+							<td><?=$row['j_category']?>  </td>
+                        </tr>
 
                 <?php
                     while($row = $result->fetch_assoc()){
                         echo "<tr>
                             <td>" . $row["name"] . "</td>
-                            <td> </td>
-                            <td>
+                            <td>" . $row["j_title"] . "  </td>
+							<td>" . $row["j_location"] . "  </td>
+							<td>" . $row["year"] . "</td>
+                            <td>" . $row["cpi"] . "  </td>
+							<td>" . $row["ctc"] . "  </td>
+							<td>" . $row["j_category"] . "  </td>
+                            
                         </tr>";
                     }
                 ?>
+				
                 </table>
 			</div>
 		</div>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Registeration</title>
+    <title>Alumni Registeration</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -46,7 +46,7 @@
                   $options = array("cost"=>4);
           $password = password_hash($password,PASSWORD_BCRYPT,$options);
                   
-                  $result = mysqli_query($dbc,"INSERT into alumni (name,roll_no,contact_number,passout_year,company_name,ctc,cpi,email,password)  values ('$name','$roll_no','$contact_number','$passout_year','$cpi','$current_company','$ctc','$email','$password')");
+                  $result = mysqli_query($dbc,"INSERT into alumni (name,roll_no,contact_number,passout_year,company_name,ctc,cpi,email,password)  values ('$name','$roll_no','$contact_number','$passout_year','$company_name','$ctc','$cpi','$email','$password')");
       
                  if($result)
           {
@@ -83,7 +83,7 @@
     <input type="text" class="form-control" name="roll_no" value="<?php if(isset($error)) {echo $email;}?>" required="" placeholder="Roll No"><br></div>
     <div class="form-group">
     <label class="label_txt"></label>
-    <input type="phone" class="form-control" name="contact_number-" required="" placeholder="Contact number"><br></div>
+    <input type="phone" class="form-control" name="contact_number" required="" placeholder="Contact number"><br></div>
     <div class="form-group">
     <label class="label_txt"></label>
     <input type="text" class="form-control" name="passout_year" required="" placeholder="Passout year"><br></div>
@@ -93,7 +93,7 @@
 
     <div class="form-group">
     <label class="label_txt"></label>
-    <input type="text" class="form-control" name="current_company" required="" placeholder="Current Company"><br></div>
+    <input type="text" class="form-control" name="company_name" required="" placeholder="Current Company"><br></div>
 
     <div class="form-group">
     <label class="label_txt"></label>

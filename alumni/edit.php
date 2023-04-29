@@ -5,6 +5,12 @@ if(!isset($_SESSION["login_sess"]))
     
     header("location:login.php"); 
 }
+$dbHost='localhost';
+$dbName='php_test';
+$dbUsername='root';
+$dbPassword='SHREY2002';
+$dbc=mysqli_connect($dbHost,$dbUsername,$dbPassword,$dbName);   
+
 
 ?>
 
@@ -14,7 +20,7 @@ if(!isset($_SESSION["login_sess"]))
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Registeration</title>
+    <title>Alumni Updation</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 	</head>
@@ -40,10 +46,12 @@ if(isset($_POST["submit"])){
     $email_old =$_SESSION['login_email'];
 
   $query10="DELETE FROM alumni where email='$email_old'";
-  $query11 = "INSERT into alumni values ('$name','$roll_no','$contact_number','$passout_year','$cpi','$current_company','$ctc','$email','$password')";
+  $options = array("cost"=>4);
+  $password = password_hash($password,PASSWORD_BCRYPT,$options);
+  $query11 = "INSERT into alumni (name,roll_no,contact_number,passout_year,company_name,ctc,cpi,email,password)  values ('$name','$roll_no','$contact_number','$passout_year','$company_name','$ctc','$cpi','$email','$password')";
 
-  mysqli_query($con,$query10);
-  $result1= mysqli_query($con,$query11);
+  mysqli_query($dbc,$query10);
+  $result1= mysqli_query($dbc,$query11);
 
 
 if ($result1){
@@ -91,7 +99,7 @@ if ($result1){
     <div class="form-group">
     <br>
     <label class="label_txt"></label>
-    <input type="phone" class="form-control" name="contact_number-" required="" placeholder="Contact number"><br></div>
+    <input type="phone" class="form-control" name="contact_number" required="" placeholder="Contact number"><br></div>
     <div class="form-group">
     <br>
     <label class="label_txt"></label>
@@ -103,7 +111,7 @@ if ($result1){
     <br>
     <div class="form-group">
     <label class="label_txt"></label>
-    <input type="text" class="form-control" name="current_company" required="" placeholder="Current Company"><br></div>
+    <input type="text" class="form-control" name="company_name" required="" placeholder="Current Company"><br></div>
     <br>
     <div class="form-group">
     <label class="label_txt"></label>
@@ -121,7 +129,7 @@ if ($result1){
     <label class="label_txt"></label>
     <input type="password" class="form-control" name="passwordConfirm" required="" placeholder="Confirm Password"><br></div>
     <br>
-  <button type="submit" name="signup" class="btn btn-primary btn-group-lg form_btn">Update</button>
+  <button type="submit" name="submit" class="btn btn-primary btn-group-lg form_btn">Update</button>
 
 </form>
 <br>

@@ -1,8 +1,8 @@
 <?php
 session_start();
 $dbHost='localhost';
-$dbName='tpc';
+$dbName='php_test';
 $dbUsername='root';
-$dbPassword='';
+$dbPassword='SHREY2002';
 $dbc=mysqli_connect($dbHost,$dbUsername,$dbPassword,$dbName);
 ?>

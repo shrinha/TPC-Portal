@@ -3,16 +3,14 @@ if(!isset($_SESSION["login_sess"]))
 {
     header("location:c_login.php"); 
 }
-  $email=$_SESSION["login_email"];
-  $findresult = mysqli_query($dbc, "SELECT * FROM company WHERE email= '$email'");
+  $a_email=$_SESSION["login_email"];
+  $findresult = mysqli_query($dbc, "SELECT * FROM company WHERE email= '$a_email'");
 if($res = mysqli_fetch_array($findresult))
-{
-
-$name = $res['name'];   
-$email = $res['email'];  
-$cid = $res['cid'];
+{   
+$a_email = $res['email'];  
 }
  ?>
+
 <!DOCTYPE html>
 <?php require_once("c_config.php"); ?>
 <html lang="en">
@@ -31,23 +29,30 @@ $cid = $res['cid'];
         <?php
         if(isset($_POST['signup'])){
             extract($_POST);
-            $sql="select * from job j
-           NATURAL JOIN company c
-           WHERE j.cid = c.cid
-           AND j.j_title = '$j_title';";
-           $res=mysqli_query($dbc,$sql); 
-
-           if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
+            if(strlen($password)<5){
+                $error[]='The password is 6 characters long.';
+            }
+            if(strlen($password)>20){
+                $error[]='password: Max length 20 characters not allowed.';
+            }
             
-                   if($j_title==$row['j_title'])
-                   {
-                        $error[] ='This Job is alredy Exists for this Company.';
-                    } 
-                  }
+        //    $sql="select * from company where(email='$email');";
+        //    $res=mysqli_query($dbc,$sql); 
+
+        //    if (mysqli_num_rows($res) > 0) {
+        //     $row = mysqli_fetch_assoc($res);
+            
+        //         //    if($email==$row['email'])
+        //         //    {
+        //         //         $error[] ='Email alredy Exists.';
+        //         //     } 
+        //           }
 
                   if(!isset($error)){ 
-                  $result = mysqli_query($dbc,"INSERT into job(cid,j_title,j_category,j_desc,j_location,cpi,ctc,i_date,j_type,moi) values('$cid','$j_title','$j_category','$j_desc','$j_location','$cpi','$ctc','$i_date','$j_type','$moi')");
+                  $options = array("cost"=>4);
+          $password = password_hash($password,PASSWORD_BCRYPT,$options);
+                  
+                  $result = mysqli_query($dbc,"UPDATE company SET name='$name',email='$email',password='$password',website='$website',p_name='$p_name',p_contact='$p_contact',location='$location',description='$description' WHERE email='$a_email' ") ;
       
                  if($result)
           {
@@ -71,45 +76,46 @@ $cid = $res['cid'];
         <div class="col-sm-4">
         <?php if(isset($done)) 
       { ?>
-    <div class="successmsg"><span style="font-size:100px;">&#9989;</span> <br> You have added this Job successfully . <br> <a href="c_account.php" style="color:#fff;">Go back to your account... </a> </div>
+
+    <div class="successmsg"><span style="font-size:100px;">&#9989;</span> <br> You have updated successfully . <br> <a href="c_account.php" style="color:#fff;">Go back to your account... </a> </div>
       <?php } else { ?>
             <div class="signup_form">
         <form style="margin-top: 10%;padding: 30px;border-radius: 5px;" action="" method="POST">
         <p style="font-size: 30px;text-align: center; color:#fff;font-weight:bold">Fill the required</p>
   <div class="form-group">
     <label class="label_txt"></label>
-    <input type="text" class="form-control" name="j_title" value="<?php if(isset($error)) {echo $lname;}?>" required="" placeholder="Job title"><br></div>
+    <input type="text" class="form-control" name="name" value="<?php if(isset($error)) {echo $lname;}?>" required="" placeholder="Company Name"><br></div>
 <div class="form-group">
     <label class="label_txt"></label>
-    <input type="text" class="form-control" name="j_category" value="<?php if(isset($error)) {echo $email;}?>" required="" placeholder="job category"><br></div>
+    <input type="email" class="form-control" name="email" value="<?php if(isset($error)) {echo $email;}?>" required="" placeholder="Email"><br></div>
  <div class="form-group">
     <label class="label_txt"></label>
-    <input type="text" class="form-control" name="j_desc" required="" placeholder="Job description"><br></div>
-<div class="form-group">
+    <input type="password" class="form-control" name="password" required="" placeholder="New Password"><br></div>
+<!-- <div class="form-group">
     <label class="label_txt"></label>
-    <input type="text" class="form-control" name="j_location" required="" placeholder="Job location"><br></div>
+    <input type="password" class="form-control" name="password_old" required="" placeholder="Old Password"><br></div> -->
 
     <div class="form-group">
     <label class="label_txt"></label>
-    <input type="float" class="form-control" name="cpi" required="" placeholder="CPI Cutoff"><br></div>
+    <input type="text" class="form-control" name="website" required="" placeholder="Company Website"><br></div>
 
     <div class="form-group">
     <label class="label_txt"></label>
-    <input type="bigint" class="form-control" name="ctc" required="" placeholder="CTC"><br></div>
+    <input type="text" class="form-control" name="p_name" required="" placeholder="Person name whom to contact"><br></div>
 
     <div class="form-group">
     <label class="label_txt"></label>
-    <input type="date" class="form-control" name="i_date" required="" placeholder="Interview date"><br></div>
+    <input type="phone" class="form-control" name="p_contact" required="" placeholder="Contact number"><br></div>
 
     <div class="form-group">
     <label class="label_txt"></label>
-    <input type="text" class="form-control" name="j_type" required="" placeholder="job type"><br></div>
+    <input type="text" class="form-control" name="location" required="" placeholder="Company Address"><br></div>
 
     <div class="form-group">
     <label class="label_txt"></label>
-    <input type="text" class="form-control" name="moi" required="" placeholder="Method of Interview"><br></div>
+    <input type="text" class="form-control" name="description" required="" placeholder="Description"><br></div>
   
-  <button type="submit" name="signup" class="btn btn-primary btn-group-lg form_btn">Register</button>
+  <button type="submit" name="signup" class="btn btn-primary btn-group-lg form_btn">Update</button>
   <?php } ?>
   <a href="c_account.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Back</a> 
 </form>
