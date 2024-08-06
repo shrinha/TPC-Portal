@@ -41,6 +41,7 @@ body {font-size:16px;}
     <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
     <a href="addjob.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Add Jobs</a> 
     <a href="c_update.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Update</a> 
+    <a href="applicants.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Applicants</a>
     <a href="c_logout.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">LogOut</a>
   </div>
 </nav>
